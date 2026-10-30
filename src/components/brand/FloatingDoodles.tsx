@@ -367,22 +367,7 @@ export function FloatingDoodles() {
         </span>
       </div>
 
-      {/* 3. Top Corners: Authentic Retro Diner Badges & Stamps */}
-      {/* Top-Right Stamp */}
-      <div className="absolute top-2.5 right-2.5 sm:top-6 sm:right-8 pointer-events-none select-none opacity-50 sm:opacity-70">
-        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-dashed border-[#D82229]/40 bg-[#FAF6F2]/70 text-[9px] sm:text-[10px] font-bold text-[#D82229] tracking-wider uppercase shadow-xs">
-          <UncutStar className="w-2.5 h-2.5 text-[#D82229]" />
-          <span>ORIGINAL TASTE ★ 100% FRESH</span>
-        </div>
-      </div>
 
-      {/* Top-Left Stamp */}
-      <div className="absolute top-2.5 left-2.5 sm:top-6 sm:left-8 pointer-events-none select-none opacity-50 sm:opacity-70">
-        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-dashed border-[#191816]/30 bg-[#FAF6F2]/70 text-[9px] sm:text-[10px] font-bold text-[#191816] tracking-wider shadow-xs">
-          <span className="text-[#D82229] font-sans">🔥</span>
-          <span>مشوي على اللهب</span>
-        </div>
-      </div>
 
       {/* 4. Whimsical Handwritten Doodle Annotations on Sides */}
       {/* Left side annotation */}
