@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect, useRef } from "react";
+import { motion, useAnimationFrame } from "framer-motion";
 import { UncutStar } from "./UncutStar";
 
 // 1. Hand-drawn Burger Doodle
@@ -185,116 +185,134 @@ function InteractiveDrink({ className = "" }: { className?: string }) {
 }
 
 export function FloatingDoodles() {
+  const [radii, setRadii] = useState({ rx: 155, ry: 255 });
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const updateDimensions = () => {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      if (w < 640) {
+        // Mobile: Vertically elongated ellipse ("بيضاوي بالطول")
+        // Width hugs outer edges of the phone, Height spans above badges and below buttons
+        const rx = Math.min(Math.max(w * 0.40, 140), 168);
+        const ry = Math.min(Math.max(h * 0.35, 235), 275);
+        setRadii({ rx, ry });
+      } else if (w < 1024) {
+        // Tablet
+        setRadii({ rx: 330, ry: 260 });
+      } else {
+        // Desktop: Wide & comfortable
+        setRadii({ rx: 470, ry: 280 });
+      }
+    };
+
+    updateDimensions();
+    window.addEventListener("resize", updateDimensions);
+    return () => window.removeEventListener("resize", updateDimensions);
+  }, []);
+
+  // Smooth, continuous elliptical orbit at 60/120fps using hardware-accelerated transforms
+  useAnimationFrame((time) => {
+    const duration = 38000; // 38s for a gentle, seamless revolution
+    const baseAngle = ((time % duration) / duration) * 2 * Math.PI;
+
+    itemRefs.current.forEach((el, index) => {
+      if (!el) return;
+      // 6 equidistant positions (60 deg apart)
+      const angle = baseAngle + index * ((2 * Math.PI) / 6);
+      const x = radii.rx * Math.sin(angle);
+      const y = -radii.ry * Math.cos(angle);
+      el.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
+    });
+  });
+
   const doodles = [
     {
       id: "burger",
       title: "البرجر المشوي على اللهب! (اضغط أو مرر)",
-      x: "50%",
-      y: "0%",
       render: (
-        <InteractiveBurger className="w-13 h-13 sm:w-18 sm:h-18 lg:w-22 lg:h-22 drop-shadow-sm" />
+        <InteractiveBurger className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 drop-shadow-sm" />
       ),
     },
     {
       id: "crepe",
       title: "كريب أن كات المقرمش! (اضغط أو مرر)",
-      x: "93.3%",
-      y: "25%",
       render: (
-        <InteractiveCrepe className="w-13 h-13 sm:w-18 sm:h-18 lg:w-22 lg:h-22 drop-shadow-sm" />
+        <InteractiveCrepe className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 drop-shadow-sm" />
       ),
     },
     {
       id: "fries",
       title: "فرايز أن كات الذهبية!",
-      x: "93.3%",
-      y: "75%",
       render: (
-        <InteractiveFries className="w-11 h-13 sm:w-15 sm:h-18 lg:w-18 lg:h-21 drop-shadow-sm" />
+        <InteractiveFries className="w-10 h-12 sm:w-13 sm:h-16 lg:w-16 lg:h-19 drop-shadow-sm" />
       ),
     },
     {
       id: "baguette",
       title: "ساندويتش الباجيت الفرنسي!",
-      x: "50%",
-      y: "100%",
       render: (
-        <InteractiveBaguette className="w-15 h-9 sm:w-20 sm:h-12 lg:w-24 lg:h-14 drop-shadow-sm" />
+        <InteractiveBaguette className="w-14 h-8 sm:w-18 sm:h-10 lg:w-22 lg:h-12 drop-shadow-sm" />
       ),
     },
     {
       id: "moto",
       title: "الطيار هيجيكم طيران! 🛵",
-      x: "6.7%",
-      y: "75%",
       render: (
-        <InteractiveMoto className="w-15 h-10 sm:w-20 sm:h-13 lg:w-24 lg:h-15 drop-shadow-sm" />
+        <InteractiveMoto className="w-14 h-9 sm:w-18 sm:h-12 lg:w-22 lg:h-14 drop-shadow-sm" />
       ),
     },
     {
       id: "drink",
       title: "مشروب مثلج منعش!",
-      x: "6.7%",
-      y: "25%",
       render: (
-        <InteractiveDrink className="w-10 h-13 sm:w-14 sm:h-17 lg:w-16 lg:h-20 drop-shadow-sm" />
+        <InteractiveDrink className="w-9 h-12 sm:w-12 sm:h-15 lg:w-14 lg:h-18 drop-shadow-sm" />
       ),
     },
   ];
 
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden select-none z-0 flex items-center justify-center">
-      {/* Background Circular Orbit Track Frame */}
-      <div className="relative flex items-center justify-center">
-        {/* Elegant dashed circular orbit track */}
-        <div className="absolute w-[300px] h-[300px] xs:w-[350px] xs:h-[350px] sm:w-[530px] sm:h-[530px] md:w-[670px] md:h-[670px] lg:w-[810px] lg:h-[810px] xl:w-[920px] xl:h-[920px] rounded-full border border-dashed border-[#191816]/15 pointer-events-none" />
+      {/* Fixed Center Point for the Vertical Elliptical Orbit (NO visible frame line) */}
+      <div className="relative w-0 h-0">
+        {doodles.map((doodle, index) => {
+          // SSR initial placement
+          const initialAngle = index * ((2 * Math.PI) / 6);
+          const initialX = radii.rx * Math.sin(initialAngle);
+          const initialY = -radii.ry * Math.cos(initialAngle);
 
-        {/* Continuous rotating ring with the 6 equidistant doodles */}
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{
-            duration: 40,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          className="relative w-[300px] h-[300px] xs:w-[350px] xs:h-[350px] sm:w-[530px] sm:h-[530px] md:w-[670px] md:h-[670px] lg:w-[810px] lg:h-[810px] xl:w-[920px] xl:h-[920px] rounded-full pointer-events-none"
-        >
-          {doodles.map((doodle) => (
+          return (
             <div
               key={doodle.id}
-              className="absolute -translate-x-1/2 -translate-y-1/2"
-              style={{ left: doodle.x, top: doodle.y }}
+              ref={(node) => {
+                itemRefs.current[index] = node;
+              }}
+              className="absolute top-0 left-0 pointer-events-none will-change-transform"
+              style={{
+                transform: `translate3d(${initialX}px, ${initialY}px, 0) translate(-50%, -50%)`,
+              }}
             >
-              {/* Counter-rotation keeps each doodle upright while orbiting */}
+              {/* Interactive Touch & Hover layer (independent of translation) */}
               <motion.div
-                animate={{ rotate: -360 }}
-                transition={{
-                  duration: 40,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
+                whileHover={{ scale: 1.25, rotate: 8 }}
+                whileTap={{ scale: 0.85, rotate: -8 }}
+                transition={{ type: "spring", stiffness: 350, damping: 18 }}
+                className="pointer-events-auto cursor-pointer opacity-70 sm:opacity-85 hover:opacity-100 transition-opacity"
+                title={doodle.title}
               >
-                {/* Interactive Touch & Hover layer */}
-                <motion.div
-                  whileHover={{ scale: 1.25, rotate: 10 }}
-                  whileTap={{ scale: 0.85, rotate: -10 }}
-                  transition={{ type: "spring", stiffness: 350, damping: 18 }}
-                  className="pointer-events-auto cursor-pointer opacity-60 sm:opacity-75 hover:opacity-100 transition-opacity"
-                  title={doodle.title}
-                >
-                  {doodle.render}
-                </motion.div>
+                {doodle.render}
               </motion.div>
             </div>
-          ))}
-        </motion.div>
+          );
+        })}
       </div>
 
-      {/* Decorative Brand Stars Scattered In Background */}
+      {/* Decorative Brand Stars Scattered In Background Corners */}
       <motion.div
         animate={{ rotate: 360 }}
         transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-        className="absolute top-[18%] left-[12%] opacity-30 text-[#D82229] pointer-events-none hidden sm:block"
+        className="absolute top-[12%] left-[10%] opacity-25 text-[#D82229] pointer-events-none hidden sm:block"
       >
         <UncutStar className="w-5 h-5" />
       </motion.div>
@@ -302,23 +320,23 @@ export function FloatingDoodles() {
       <motion.div
         animate={{ rotate: -360 }}
         transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
-        className="absolute top-[16%] right-[13%] opacity-30 text-[#D82229] pointer-events-none hidden sm:block"
+        className="absolute top-[10%] right-[11%] opacity-25 text-[#D82229] pointer-events-none hidden sm:block"
       >
         <UncutStar className="w-4 h-4" />
       </motion.div>
 
       <motion.div
-        animate={{ scale: [1, 1.25, 1], opacity: [0.25, 0.55, 0.25] }}
+        animate={{ scale: [1, 1.25, 1], opacity: [0.2, 0.45, 0.2] }}
         transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-[20%] right-[14%] text-[#191816] pointer-events-none hidden sm:block"
+        className="absolute bottom-[12%] right-[12%] text-[#191816] pointer-events-none hidden sm:block"
       >
         <UncutStar className="w-4 h-4" />
       </motion.div>
 
       <motion.div
-        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
+        animate={{ scale: [1, 1.2, 1], opacity: [0.25, 0.5, 0.25] }}
         transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-[18%] left-[14%] text-[#D82229] pointer-events-none hidden sm:block"
+        className="absolute bottom-[14%] left-[12%] text-[#D82229] pointer-events-none hidden sm:block"
       >
         <UncutStar className="w-3.5 h-3.5" />
       </motion.div>
