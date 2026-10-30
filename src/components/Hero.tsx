@@ -191,7 +191,7 @@ export function Hero({ onAddToCart, onOrderSignature }: HeroProps) {
                     {/* Ingredients / Description */}
                     <p
                       className={`font-[family-name:var(--font-alexandria)] text-[#4A453F] leading-relaxed mb-2 sm:mb-2.5 break-words ${
-                        item.id === "item-chicken-tenders" || item.description.length > 80
+                        item.id === "item-chicken-tenders" || (item.description?.length ?? 0) > 80
                           ? "text-[11px] sm:text-xs line-clamp-3"
                           : "text-xs line-clamp-3"
                       }`}
