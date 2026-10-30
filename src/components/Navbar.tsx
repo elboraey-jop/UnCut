@@ -15,15 +15,18 @@ export function Navbar({ cartCount = 0, onOpenCart }: NavbarProps) {
   return (
     <header className="sticky top-0 z-40 w-full bg-[#F7F2EC]/95 backdrop-blur-md border-b border-[#DBCDBA]/80 transition-all">
       {/* Top micro ticker strip */}
-      <div className="w-full bg-[#D82229] border-b border-[#B5181E] py-2 sm:py-2.5 px-3 text-center text-[11px] sm:text-xs text-white flex items-center justify-center gap-1.5 sm:gap-2 font-medium tracking-wide shadow-sm">
-        <UncutStar className="w-2.5 h-2.5 text-white shrink-0" />
-        <span className="truncate">سمنود، شارع ترعة الساحل بجوار المطافي</span>
-        <span className="opacity-60">•</span>
-        <span className="font-bold text-white shrink-0 inline-flex items-center gap-1">
+      <div className="w-full bg-[#D82229] border-b border-[#B5181E] py-1.5 sm:py-2.5 px-3 text-center text-[11px] sm:text-xs text-white flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 font-medium tracking-wide shadow-sm">
+        <div className="flex items-center justify-center gap-1.5">
+          <UncutStar className="w-2.5 h-2.5 text-white shrink-0 hidden sm:inline-block" />
+          <span>سمنود، شارع ترعة الساحل بجوار المطافي</span>
+        </div>
+        <span className="opacity-60 hidden sm:inline">•</span>
+        <div className="font-bold text-white shrink-0 inline-flex items-center justify-center gap-1">
+          <UncutStar className="w-2 h-2 text-white/80 shrink-0 sm:hidden" />
           <span>الطيار هيجيكم طيران</span>
-          <Motorcycle size={14} weight="fill" className="text-white" />
-        </span>
-        <UncutStar className="w-2.5 h-2.5 text-white shrink-0" />
+          <Motorcycle size={13} weight="fill" className="text-white shrink-0" />
+          <UncutStar className="w-2 h-2 text-white/80 shrink-0" />
+        </div>
       </div>
 
       <div className="max-w-[1550px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-14 h-14 sm:h-18 flex items-center justify-between">

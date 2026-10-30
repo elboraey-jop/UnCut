@@ -159,16 +159,23 @@ export function Hero({ onAddToCart, onOrderSignature }: HeroProps) {
               return (
                 <div
                   key={item.id}
-                  className="w-[84vw] max-w-[340px] sm:w-[350px] lg:w-[370px] shrink-0 snap-center relative rounded-2xl border-2 border-[#191816] bg-[#EFE7DC] p-4 sm:p-5 shadow-sm flex flex-col justify-between text-right transition-transform"
+                  className="w-[84vw] max-w-[340px] sm:w-[350px] lg:w-[370px] shrink-0 snap-center relative rounded-2xl border-2 border-[#191816] bg-[#EFE7DC] p-3.5 sm:p-5 shadow-sm flex flex-col justify-between text-right transition-transform overflow-hidden"
                 >
-                  <div>
+                  <div className="min-w-0">
                     {/* Top Bar inside Card */}
-                    <div className="flex items-center justify-between border-b border-[#D8C7B2] pb-2.5 mb-2.5">
-                      <div className="flex items-center gap-1.5">
-                        <span className="font-[family-name:var(--font-bebas-neue)] tracking-wider text-[10px] px-2 py-0.5 rounded bg-[#D82229] text-white">
+                    <div className="flex items-center justify-between border-b border-[#D8C7B2] pb-2 sm:pb-2.5 mb-2 sm:mb-2.5 gap-1.5 min-w-0">
+                      <div className="flex items-center gap-1.5 min-w-0 flex-1 overflow-hidden">
+                        <span className="font-[family-name:var(--font-bebas-neue)] tracking-wider text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 rounded bg-[#D82229] text-white shrink-0">
                           {item.badge || "SIGNATURE"}
                         </span>
-                        <h4 className="font-[family-name:var(--font-aref-ruqaa)] text-lg sm:text-xl font-bold text-[#191816] truncate">
+                        <h4
+                          className={`font-[family-name:var(--font-aref-ruqaa)] font-bold text-[#191816] truncate ${
+                            item.name.length > 20
+                              ? "text-sm sm:text-base"
+                              : "text-base sm:text-lg"
+                          }`}
+                          title={item.name}
+                        >
                           {item.name}
                         </h4>
                       </div>
@@ -176,20 +183,26 @@ export function Hero({ onAddToCart, onOrderSignature }: HeroProps) {
                       {/* 5 Stars */}
                       <div className="flex items-center gap-0.5 text-[#D82229] shrink-0">
                         {[...Array(5)].map((_, i) => (
-                          <UncutStar key={i} className="w-3.5 h-3.5" />
+                          <UncutStar key={i} className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                         ))}
                       </div>
                     </div>
 
                     {/* Ingredients / Description */}
-                    <p className="font-[family-name:var(--font-alexandria)] text-xs text-[#4A453F] leading-relaxed line-clamp-3 mb-2.5">
+                    <p
+                      className={`font-[family-name:var(--font-alexandria)] text-[#4A453F] leading-relaxed mb-2 sm:mb-2.5 break-words ${
+                        item.id === "item-chicken-tenders" || item.description.length > 80
+                          ? "text-[11px] sm:text-xs line-clamp-3"
+                          : "text-xs line-clamp-3"
+                      }`}
+                    >
                       {item.description}
                     </p>
 
                     {/* Highlight Pill */}
-                    <div className="flex items-center gap-1.5 text-[10px] text-[#D82229] font-medium pb-2">
-                      <Sparkle size={13} weight="fill" />
-                      <span>
+                    <div className="flex items-center gap-1.5 text-[9px] sm:text-[10px] text-[#D82229] font-medium pb-1.5 sm:pb-2 min-w-0">
+                      <Sparkle size={13} weight="fill" className="shrink-0" />
+                      <span className="truncate">
                         {item.category === "crepes"
                           ? "الوصفة الأكثر طلباً في كريب أن كات"
                           : item.category === "burgers"
