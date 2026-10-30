@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+@theme {
+  --font-aref: var(--font-aref-ruqaa), serif;
+  --font-marhey: var(--font-marhey), cursive;
+  --font-alexandria: var(--font-alexandria), sans-serif;
+  --font-bebas: var(--font-bebas-neue), sans-serif;
+
+  --color-kraft: #F7F2EC;
+  --color-kraft-light: #FDFBF8;
+  --color-kraft-card: #EFE7DC;
+  --color-kraft-dark: #E4D7C5;
+  --color-kraft-border: #DBCDBA;
+
+  --color-brand-red: #D82229;
+  --color-brand-red-hover: #BF1920;
+  --color-brand-red-light: #FDE8E9;
+
+  --color-charcoal: #191816;
+  --color-charcoal-muted: #57524A;
+  --color-charcoal-light: #8A8276;
+}
+
+:root {
+  --background: #F7F2EC;
+  --foreground: #191816;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  height: -webkit-fill-available;
+}
+
+/* Lenis smooth scrolling recommendations */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+body {
+  background-color: #F7F2EC;
+  color: #191816;
+  font-family: var(--font-alexandria), system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+  direction: rtl;
+  min-height: 100dvh;
+  min-height: -webkit-fill-available;
+}
+
+/* Paper aesthetic subtle background */
+.kraft-paper-bg {
+  background-color: #F7F2EC;
+  background-image: radial-gradient(rgba(24, 24, 24, 0.035) 1px, transparent 0);
+  background-size: 20px 20px;
+}
+
+/* Authentic editorial menu dotted line connector */
+.dotted-leader {
+  flex-grow: 1;
+  border-bottom: 2px dotted #C2B39E;
+  margin: 0 0.5rem 0.25rem 0.5rem;
+  opacity: 0.8;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #F7F2EC;
+}
+::-webkit-scrollbar-thumb {
+  background: #D5C5B0;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #BFAC95;
+}

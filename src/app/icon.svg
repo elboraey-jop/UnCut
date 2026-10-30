@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="6 8 106 104" fill="none" stroke="#D82229" stroke-width="4.8" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Top Bun -->
+  <path d="M25 50 C25 25, 95 25, 95 50 Z" />
+  <!-- Sesame seeds on bun -->
+  <ellipse cx="45" cy="38" rx="2.8" ry="1.6" transform="rotate(-15 45 38)" fill="#D82229" />
+  <ellipse cx="60" cy="32" rx="2.8" ry="1.6" fill="#D82229" />
+  <ellipse cx="75" cy="40" rx="2.8" ry="1.6" transform="rotate(20 75 40)" fill="#D82229" />
+
+  <!-- Melting Cheese / Sauce wave -->
+  <path d="M22 55 Q35 60, 48 53 Q60 62, 75 54 Q88 61, 98 54" stroke="#D82229" stroke-width="5.2" />
+
+  <!-- Beef Patty -->
+  <rect x="22" y="60" width="76" height="12" rx="6" />
+
+  <!-- Lettuce leaves wavy -->
+  <path d="M18 76 C25 72, 35 78, 45 74 C55 80, 68 73, 78 78 C88 74, 98 78, 102 75" />
+
+  <!-- Bottom Bun -->
+  <path d="M26 80 C26 92, 94 92, 94 80 Z" />
+
+  <!-- Floating ingredients (Tomato & Pepper doodle) -->
+  <g transform="translate(10, 10) scale(0.65)" stroke="#D82229" stroke-width="4.5">
+    <circle cx="35" cy="20" r="14" />
+    <path d="M35 10 C35 18, 43 20, 43 20" />
+  </g>
+</svg>
