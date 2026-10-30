@@ -54,13 +54,13 @@ export function Hero({ onAddToCart, onOrderSignature }: HeroProps) {
         {/* Interactive Motion Graphic Floating Food Doodles (Touch & Hover friendly) */}
         <FloatingDoodles />
 
-        <div className="max-w-4xl mx-auto flex flex-col items-center justify-center my-auto w-full relative z-10">
+        <div className="max-w-4xl mx-auto flex flex-col items-center justify-center my-auto w-full relative z-10 pointer-events-none">
           {/* Top Badges Row */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="flex items-center justify-center gap-2 sm:gap-3 mb-5 sm:mb-8"
+            className="flex items-center justify-center gap-2 sm:gap-3 mb-5 sm:mb-8 pointer-events-auto"
           >
             <UniqueOvalBadge className="text-xs py-0.5 px-3" />
             <span className="text-[#C2B39E] text-xs">•</span>
@@ -96,7 +96,7 @@ export function Hero({ onAddToCart, onOrderSignature }: HeroProps) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-col items-center justify-center gap-3 sm:gap-4 mt-7 sm:mt-10 w-full"
+            className="flex flex-col items-center justify-center gap-3 sm:gap-4 mt-7 sm:mt-10 w-full pointer-events-auto"
           >
             {/* Row 1: WhatsApp + Phone Call side by side */}
             <div className="flex items-center justify-center gap-2.5 sm:gap-3.5 w-full max-w-xs sm:max-w-sm">

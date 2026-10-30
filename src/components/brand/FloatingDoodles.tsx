@@ -185,165 +185,142 @@ function InteractiveDrink({ className = "" }: { className?: string }) {
 }
 
 export function FloatingDoodles() {
+  const doodles = [
+    {
+      id: "burger",
+      title: "البرجر المشوي على اللهب! (اضغط أو مرر)",
+      x: "50%",
+      y: "0%",
+      render: (
+        <InteractiveBurger className="w-13 h-13 sm:w-18 sm:h-18 lg:w-22 lg:h-22 drop-shadow-sm" />
+      ),
+    },
+    {
+      id: "crepe",
+      title: "كريب أن كات المقرمش! (اضغط أو مرر)",
+      x: "93.3%",
+      y: "25%",
+      render: (
+        <InteractiveCrepe className="w-13 h-13 sm:w-18 sm:h-18 lg:w-22 lg:h-22 drop-shadow-sm" />
+      ),
+    },
+    {
+      id: "fries",
+      title: "فرايز أن كات الذهبية!",
+      x: "93.3%",
+      y: "75%",
+      render: (
+        <InteractiveFries className="w-11 h-13 sm:w-15 sm:h-18 lg:w-18 lg:h-21 drop-shadow-sm" />
+      ),
+    },
+    {
+      id: "baguette",
+      title: "ساندويتش الباجيت الفرنسي!",
+      x: "50%",
+      y: "100%",
+      render: (
+        <InteractiveBaguette className="w-15 h-9 sm:w-20 sm:h-12 lg:w-24 lg:h-14 drop-shadow-sm" />
+      ),
+    },
+    {
+      id: "moto",
+      title: "الطيار هيجيكم طيران! 🛵",
+      x: "6.7%",
+      y: "75%",
+      render: (
+        <InteractiveMoto className="w-15 h-10 sm:w-20 sm:h-13 lg:w-24 lg:h-15 drop-shadow-sm" />
+      ),
+    },
+    {
+      id: "drink",
+      title: "مشروب مثلج منعش!",
+      x: "6.7%",
+      y: "25%",
+      render: (
+        <InteractiveDrink className="w-10 h-13 sm:w-14 sm:h-17 lg:w-16 lg:h-20 drop-shadow-sm" />
+      ),
+    },
+  ];
+
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden select-none z-0">
-      {/* 1. Top-Left: Burger Doodle with floating physics */}
-      <motion.div
-        drag
-        dragConstraints={{ left: -10, right: 10, top: -10, bottom: 10 }}
-        whileHover={{ scale: 1.25, rotate: 15 }}
-        whileTap={{ scale: 0.85, rotate: -15 }}
-        animate={{
-          y: [-6, 6, -6],
-          rotate: [-3, 3, -3],
-        }}
-        transition={{
-          duration: 4.5,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute top-[8%] left-[4%] sm:left-[8%] pointer-events-auto cursor-grab active:cursor-grabbing opacity-55 sm:opacity-75 hover:opacity-100 transition-opacity"
-        title="البرجر المشوي على اللهب! (اضغط أو حرك)"
-      >
-        <InteractiveBurger className="w-16 h-16 sm:w-24 sm:h-24 drop-shadow-sm" />
-      </motion.div>
+    <div className="absolute inset-0 pointer-events-none overflow-hidden select-none z-0 flex items-center justify-center">
+      {/* Background Circular Orbit Track Frame */}
+      <div className="relative flex items-center justify-center">
+        {/* Elegant dashed circular orbit track */}
+        <div className="absolute w-[300px] h-[300px] xs:w-[350px] xs:h-[350px] sm:w-[530px] sm:h-[530px] md:w-[670px] md:h-[670px] lg:w-[810px] lg:h-[810px] xl:w-[920px] xl:h-[920px] rounded-full border border-dashed border-[#191816]/15 pointer-events-none" />
 
-      {/* 2. Top-Right: Crepe Doodle with gentle float */}
-      <motion.div
-        drag
-        dragConstraints={{ left: -10, right: 10, top: -10, bottom: 10 }}
-        whileHover={{ scale: 1.25, rotate: -12 }}
-        whileTap={{ scale: 0.85, rotate: 15 }}
-        animate={{
-          y: [7, -7, 7],
-          rotate: [4, -4, 4],
-        }}
-        transition={{
-          duration: 5,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute top-[9%] right-[3%] sm:right-[8%] pointer-events-auto cursor-grab active:cursor-grabbing opacity-55 sm:opacity-75 hover:opacity-100 transition-opacity"
-        title="كريب أن كات المقرمش! (اضغط أو حرك)"
-      >
-        <InteractiveCrepe className="w-18 h-16 sm:w-28 sm:h-24 drop-shadow-sm" />
-      </motion.div>
+        {/* Continuous rotating ring with the 6 equidistant doodles */}
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{
+            duration: 40,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+          className="relative w-[300px] h-[300px] xs:w-[350px] xs:h-[350px] sm:w-[530px] sm:h-[530px] md:w-[670px] md:h-[670px] lg:w-[810px] lg:h-[810px] xl:w-[920px] xl:h-[920px] rounded-full pointer-events-none"
+        >
+          {doodles.map((doodle) => (
+            <div
+              key={doodle.id}
+              className="absolute -translate-x-1/2 -translate-y-1/2"
+              style={{ left: doodle.x, top: doodle.y }}
+            >
+              {/* Counter-rotation keeps each doodle upright while orbiting */}
+              <motion.div
+                animate={{ rotate: -360 }}
+                transition={{
+                  duration: 40,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+              >
+                {/* Interactive Touch & Hover layer */}
+                <motion.div
+                  whileHover={{ scale: 1.25, rotate: 10 }}
+                  whileTap={{ scale: 0.85, rotate: -10 }}
+                  transition={{ type: "spring", stiffness: 350, damping: 18 }}
+                  className="pointer-events-auto cursor-pointer opacity-60 sm:opacity-75 hover:opacity-100 transition-opacity"
+                  title={doodle.title}
+                >
+                  {doodle.render}
+                </motion.div>
+              </motion.div>
+            </div>
+          ))}
+        </motion.div>
+      </div>
 
-      {/* 3. Middle-Left: French Fries with springy hop (Shifted up on mobile away from text) */}
-      <motion.div
-        drag
-        dragConstraints={{ left: -10, right: 10, top: -10, bottom: 10 }}
-        whileHover={{ scale: 1.3, rotate: -10 }}
-        whileTap={{ scale: 0.85 }}
-        animate={{
-          y: [-8, 6, -8],
-          rotate: [-5, 5, -5],
-        }}
-        transition={{
-          duration: 4,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute top-[20%] sm:top-[44%] left-[1.5%] sm:left-[6%] pointer-events-auto cursor-grab active:cursor-grabbing opacity-50 sm:opacity-70 hover:opacity-100 transition-opacity"
-        title="فرايز أن كات الذهبية!"
-      >
-        <InteractiveFries className="w-12 h-16 sm:w-18 sm:h-22 drop-shadow-sm" />
-      </motion.div>
-
-      {/* 4. Middle-Right: French Baguette angled (Shifted down on mobile away from text) */}
-      <motion.div
-        drag
-        dragConstraints={{ left: -10, right: 10, top: -10, bottom: 10 }}
-        whileHover={{ scale: 1.3, rotate: 18 }}
-        whileTap={{ scale: 0.85 }}
-        animate={{
-          y: [6, -8, 6],
-          rotate: [8, -4, 8],
-        }}
-        transition={{
-          duration: 4.8,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute top-[68%] sm:top-[46%] right-[1.5%] sm:right-[6%] pointer-events-auto cursor-grab active:cursor-grabbing opacity-50 sm:opacity-70 hover:opacity-100 transition-opacity"
-        title="ساندويتش الباجيت الفرنسي!"
-      >
-        <InteractiveBaguette className="w-18 h-10 sm:w-24 sm:h-14 drop-shadow-sm" />
-      </motion.div>
-
-      {/* 5. Bottom-Left: Delivery Motorcycle flying */}
-      <motion.div
-        drag
-        dragConstraints={{ left: -10, right: 10, top: -10, bottom: 10 }}
-        whileHover={{ scale: 1.25, x: 10 }}
-        whileTap={{ scale: 0.85 }}
-        animate={{
-          x: [-4, 6, -4],
-          y: [2, -4, 2],
-        }}
-        transition={{
-          duration: 3.2,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute bottom-[10%] left-[4%] sm:left-[10%] pointer-events-auto cursor-grab active:cursor-grabbing opacity-50 sm:opacity-75 hover:opacity-100 transition-opacity"
-        title="الطيار هيجيكم طيران! 🛵"
-      >
-        <InteractiveMoto className="w-20 h-12 sm:w-26 sm:h-16 drop-shadow-sm" />
-      </motion.div>
-
-      {/* 6. Bottom-Right: Refreshing Cold Drink */}
-      <motion.div
-        drag
-        dragConstraints={{ left: -10, right: 10, top: -10, bottom: 10 }}
-        whileHover={{ scale: 1.3, rotate: -15 }}
-        whileTap={{ scale: 0.85 }}
-        animate={{
-          y: [-5, 7, -5],
-          rotate: [3, -3, 3],
-        }}
-        transition={{
-          duration: 4.2,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-        className="absolute bottom-[11%] right-[4%] sm:right-[10%] pointer-events-auto cursor-grab active:cursor-grabbing opacity-50 sm:opacity-70 hover:opacity-100 transition-opacity"
-        title="مشروب مثلج منعش!"
-      >
-        <InteractiveDrink className="w-11 h-14 sm:w-16 sm:h-20 drop-shadow-sm" />
-      </motion.div>
-
-      {/* 7. Floating Red Uncut Stars Scattered */}
+      {/* Decorative Brand Stars Scattered In Background */}
       <motion.div
         animate={{ rotate: 360 }}
         transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-        className="absolute top-[28%] left-[16%] opacity-40 text-[#D82229] pointer-events-none hidden sm:block"
-      >
-        <UncutStar className="w-6 h-6" />
-      </motion.div>
-
-      <motion.div
-        animate={{ rotate: -360 }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        className="absolute top-[26%] right-[17%] opacity-40 text-[#D82229] pointer-events-none hidden sm:block"
+        className="absolute top-[18%] left-[12%] opacity-30 text-[#D82229] pointer-events-none hidden sm:block"
       >
         <UncutStar className="w-5 h-5" />
       </motion.div>
 
       <motion.div
-        animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.6, 0.3] }}
-        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-[28%] right-[18%] text-[#191816] pointer-events-none hidden sm:block"
+        animate={{ rotate: -360 }}
+        transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
+        className="absolute top-[16%] right-[13%] opacity-30 text-[#D82229] pointer-events-none hidden sm:block"
       >
         <UncutStar className="w-4 h-4" />
       </motion.div>
 
       <motion.div
-        animate={{ scale: [1, 1.25, 1], opacity: [0.35, 0.65, 0.35] }}
-        transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute bottom-[25%] left-[18%] text-[#D82229] pointer-events-none hidden sm:block"
+        animate={{ scale: [1, 1.25, 1], opacity: [0.25, 0.55, 0.25] }}
+        transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-[20%] right-[14%] text-[#191816] pointer-events-none hidden sm:block"
       >
         <UncutStar className="w-4 h-4" />
+      </motion.div>
+
+      <motion.div
+        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
+        transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-[18%] left-[14%] text-[#D82229] pointer-events-none hidden sm:block"
+      >
+        <UncutStar className="w-3.5 h-3.5" />
       </motion.div>
     </div>
   );
