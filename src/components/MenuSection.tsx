@@ -80,28 +80,48 @@ function ItemBaguetteIcon({ className = "w-3.5 h-3.5 text-[#D82229]" }: { classN
   );
 }
 
-// 4. Mini Roll / Wrap / Shawarma Icon (Distinct from baguette - sliced wrap with spiral fold!)
-function ItemRollIcon({ className = "w-3.5 h-3.5 text-[#D82229]" }: { className?: string }) {
+// 4. Mini Roll / Wrap / Shawarma Icon (Matching the exact chicken wrap illustration in red)
+function ItemRollIcon({ className = "w-4.5 h-4.5 text-[#D82229]" }: { className?: string }) {
   return (
     <svg
-      viewBox="0 0 24 24"
+      viewBox="0 0 32 32"
       fill="none"
       stroke="currentColor"
-      strokeWidth="2"
+      strokeWidth="1.8"
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className}
       aria-hidden="true"
     >
-      {/* Sliced top opening of the rolled flatbread */}
-      <ellipse cx="14" cy="5.5" rx="5" ry="2.5" transform="rotate(-20 14 5.5)" fill="currentColor" fillOpacity="0.25" />
-      {/* Spiral filling */}
-      <path d="M12.5 5 Q14 4 15.5 5.5 Q14 7 13.5 5.5" strokeWidth="1.6" />
-      {/* Rolled cylinder body */}
-      <path d="M8.5 7 L5 17.5 C4.5 19 6 20 7.5 19.5 L17 15.5 C18.5 15 19 13.5 18.5 12 L17 8" fill="currentColor" fillOpacity="0.1" />
-      {/* Toasted seams on wrap */}
-      <line x1="8" y1="12" x2="13.5" y2="10" strokeWidth="1.5" strokeDasharray="1.5 1.5" />
-      <line x1="7.5" y1="16" x2="13" y2="14" strokeWidth="1.5" />
+      {/* 1. Fluffy Lettuce Crown on top */}
+      <path
+        d="M9 10.5 C8 8, 10 6, 12 6.5 C13.5 4.5, 16.5 4, 18 5.5 C19.5 4.2, 22.5 5, 23 7.5 C24.5 7.5, 25 9.5, 23.5 11"
+        fill="currentColor"
+        fillOpacity="0.12"
+      />
+
+      {/* 2. Fillings bursting from the opening (left stick, central chicken arch, right stick) */}
+      <path d="M11.5 12 V8 C11.5 7.2, 13 7.2, 13 8 V12" />
+      <path d="M14.5 12 V6.5 C14.5 5, 18.5 5, 18.5 6.5 V12" />
+      <path d="M15.8 12 V7.5 C15.8 6.7, 17.2 6.7, 17.2 7.5 V12" />
+      <path d="M19.5 12 V8 C19.5 7.2, 21 7.2, 21 8 V12" />
+
+      {/* 3. Wrap Body Cylinder & Rounded Bottom */}
+      <path
+        d="M9.5 11 V26.5 C9.5 28.2, 11 29.5, 12.8 29.5 H19.2 C21 29.5, 22.5 28.2, 22.5 26.5 V11"
+        fill="currentColor"
+        fillOpacity="0.06"
+      />
+
+      {/* 4. Diagonal Tortilla Wrap Fold (overlapping V-collar and diagonal seam) */}
+      <path d="M9.5 11 L14.5 14.5 L22.5 11" />
+      <path d="M14.5 14.5 L9.5 21" />
+
+      {/* 5. Four Parallel Diagonal Grill Marks */}
+      <line x1="17.5" y1="16.5" x2="21" y2="19" strokeWidth="1.8" />
+      <line x1="16" y1="20" x2="19.5" y2="22.5" strokeWidth="1.8" />
+      <line x1="14.5" y1="23.5" x2="18" y2="26" strokeWidth="1.8" />
+      <line x1="13" y1="27" x2="16.5" y2="29.2" strokeWidth="1.8" />
     </svg>
   );
 }
@@ -213,10 +233,10 @@ function ItemSauceBowlIcon({ className = "w-3.5 h-3.5 text-[#D82229]" }: { class
 // Function to resolve specific item icon
 function getItemIcon(item: MenuItem) {
   if (item.category === "burgers") {
-    return <ItemBurgerIcon className="w-3.5 h-3.5 text-[#D82229]" />;
+    return <ItemBurgerIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-[#D82229]" />;
   }
   if (item.category === "crepes") {
-    return <ItemCrepeIcon className="w-3.5 h-3.5 text-[#D82229]" />;
+    return <ItemCrepeIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-[#D82229]" />;
   }
   if (item.category === "sandwiches") {
     if (
@@ -224,26 +244,26 @@ function getItemIcon(item: MenuItem) {
       item.name.includes("رول") ||
       item.id.includes("roll")
     ) {
-      return <ItemRollIcon className="w-3.5 h-3.5 text-[#D82229]" />;
+      return <ItemRollIcon className="w-5 h-5 sm:w-5.5 sm:h-5.5 text-[#D82229]" />;
     }
-    return <ItemBaguetteIcon className="w-3.5 h-3.5 text-[#D82229]" />;
+    return <ItemBaguetteIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-[#D82229]" />;
   }
   if (item.category === "appetizers") {
     if (item.id === "item-chicken-tenders" || item.name.includes("تندرز")) {
-      return <ItemTendersIcon className="w-3.5 h-3.5 text-[#D82229]" />;
+      return <ItemTendersIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-[#D82229]" />;
     }
     if (item.id.includes("mozzarella") || item.name.includes("موتزاريلا")) {
-      return <ItemCheeseSticksIcon className="w-3.5 h-3.5 text-[#D82229]" />;
+      return <ItemCheeseSticksIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-[#D82229]" />;
     }
     if (item.id.includes("onion") || item.name.includes("بصل")) {
-      return <ItemOnionRingsIcon className="w-3.5 h-3.5 text-[#D82229]" />;
+      return <ItemOnionRingsIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-[#D82229]" />;
     }
     if (item.id.includes("coleslaw") || item.name.includes("كول سلو")) {
-      return <ItemSauceBowlIcon className="w-3.5 h-3.5 text-[#D82229]" />;
+      return <ItemSauceBowlIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-[#D82229]" />;
     }
-    return <ItemFriesIcon className="w-3.5 h-3.5 text-[#D82229]" />;
+    return <ItemFriesIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-[#D82229]" />;
   }
-  return <ItemBurgerIcon className="w-3.5 h-3.5 text-[#D82229]" />;
+  return <ItemBurgerIcon className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-[#D82229]" />;
 }
 
 interface SubCategoryGroup {
@@ -549,7 +569,7 @@ export function MenuSection({ onAddToCart }: MenuSectionProps) {
                             <div className="flex items-start justify-between gap-2">
                               <div className="flex items-center gap-2 min-w-0 flex-1">
                                 {/* Small Item Icon next to name */}
-                                <div className="w-6 h-6 rounded-md bg-[#D82229]/10 border border-[#D82229]/15 flex items-center justify-center shrink-0">
+                                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-[#D82229]/10 border border-[#D82229]/20 flex items-center justify-center shrink-0 p-0.5">
                                   {getItemIcon(item)}
                                 </div>
 
